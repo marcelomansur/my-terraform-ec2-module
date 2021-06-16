@@ -13,7 +13,7 @@ module "my_key_pair" {
   source = "terraform-aws-modules/key-pair/aws"
 
   key_name   = "my-tf-keypair"
-  public_key = var.my_public_key
+  public_key = file(var.my_key_file)
 }
 
 module "my_ec2_database_cluster" {
