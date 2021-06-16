@@ -1,7 +1,7 @@
 ENV_FILE=.env
 SHELL=/bin/bash
 EXAMPLE_DIR=examples
-MODULE_DIR=$$PWD
+MODULE_DIR=$(shell dirname $$PWD)
 TERRAFORM_VERSION=1.0.0
 TFPLAN = tfplan
 
@@ -23,24 +23,24 @@ hp: ## This help.
 #
 # Terraform fmt
 terraform-fmt: ## Run command 'terraform fmt -check'
-	  docker run --rm -v $(MODULE_DIR):/app -w /app hashicorp/terraform:$(TERRAFORM_VERSION) fmt
+	  docker run --rm -v $(MODULE_DIR):/app -w /app/$(EXAMPLE_DIR) hashicorp/terraform:$(TERRAFORM_VERSION) fmt
 # Terraform init
 terraform-init: ## Run command 'terraform init'
-	  docker run --rm -v $(MODULE_DIR):/app -w /app hashicorp/terraform:$(TERRAFORM_VERSION) init
+	  docker run --rm -v $(MODULE_DIR):/app -w /app/$(EXAMPLE_DIR) hashicorp/terraform:$(TERRAFORM_VERSION) init
 # Terraform validate
 terraform-validate: ## Run command 'terraform validate'
-	  docker run --rm -v $(MODULE_DIR):/app -w /app --env-file $(ENV_FILE) hashicorp/terraform:$(TERRAFORM_VERSION) validate
+	  docker run --rm -v $(MODULE_DIR):/app -w /app/$(EXAMPLE_DIR) --env-file $(ENV_FILE) hashicorp/terraform:$(TERRAFORM_VERSION) validate
 #
 # Run examples
 #
 terraform-plan: ## Exec a terraform plan and puts it on a file called tfplan
-	  docker run --rm -v $(MODULE_DIR):/app -w /app --env-file $(ENV_FILE) hashicorp/terraform:$(TERRAFORM_VERSION) plan -out $(TFPLAN)
+	  docker run --rm -v $(MODULE_DIR):/app -w /app/$(EXAMPLE_DIR) --env-file $(ENV_FILE) hashicorp/terraform:$(TERRAFORM_VERSION) plan -out $(TFPLAN)
 
 terraform-apply: ## Uses tfplan to apply the changes on AWS.
-	  docker run --rm -v $(MODULE_DIR):/app -w /app --env-file $(ENV_FILE) hashicorp/terraform:$(TERRAFORM_VERSION) apply -auto-approve $(TFPLAN)
+	  docker run --rm -v $(MODULE_DIR):/app -w /app/$(EXAMPLE_DIR) --env-file $(ENV_FILE) hashicorp/terraform:$(TERRAFORM_VERSION) apply -auto-approve $(TFPLAN)
 
 terraform-destroy: ##Destroy all resources created by the terraform file in this repo.
-	  docker run --rm -v $(MODULE_DIR):/app -w /app --env-file $(ENV_FILE) hashicorp/terraform:$(TERRAFORM_VERSION) destroy -auto-approve
+	  docker run --rm -v $(MODULE_DIR):/app -w /app/$(EXAMPLE_DIR) --env-file $(ENV_FILE) hashicorp/terraform:$(TERRAFORM_VERSION) destroy -auto-approve
 #
 # Run unit tests
 #
