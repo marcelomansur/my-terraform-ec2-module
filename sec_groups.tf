@@ -50,8 +50,20 @@ module "my_public_security_group" {
       cidr_blocks = "0.0.0.0/0"
     },
   ]
-  egress_cidr_blocks = ["0.0.0.0/0"]
-  egress_rules       = ["https-443-tcp", "http-80-tcp", "ssh-tcp"]
+  egress_with_cidr_blocks = [
+    {
+      rule        = "ssh-tcp"
+      cidr_blocks = "0.0.0.0/0"
+    },
+    {
+      rule        = "http-80-tcp"
+      cidr_blocks = "0.0.0.0/0"
+    },
+    {
+      rule        = "https-443-tcp"
+      cidr_blocks = "0.0.0.0/0"
+    },
+  ]
 }
 
 module "my_private_security_group" {

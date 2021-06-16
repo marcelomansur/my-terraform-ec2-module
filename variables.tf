@@ -4,14 +4,15 @@ variable "aws_region" {
   default     = "us-east-1"
 }
 
-variable "my_public_key" {
-  description = "The public ssh RSA key used for connection"
-  type        = string
-}
-
 variable "my_personal_ip" {
   description = "User personal computer IP"
   type        = string
+}
+
+variable "my_key_file" {
+  description = "The public ssh RSA key file used for connection"
+  type        = string
+  default     = "ssh/aws_rsa.pub"
 }
 
 variable "vpc_cidr" {
@@ -44,7 +45,24 @@ variable "network_acls_default_inbound" {
     protocol    = string
     cidr_block  = string
   }))
-  default = []
+  default = [
+    {
+      rule_number = 900
+      rule_action = "allow"
+      from_port   = 22
+      to_port     = 22
+      protocol    = "tcp"
+      cidr_block  = "0.0.0.0/0"
+    },
+    {
+      rule_number = 901
+      rule_action = "allow"
+      from_port   = 1024
+      to_port     = 65535
+      protocol    = "tcp"
+      cidr_block  = "0.0.0.0/0"
+    },
+  ]
 }
 
 variable "network_acls_default_outbound" {
@@ -57,7 +75,24 @@ variable "network_acls_default_outbound" {
     protocol    = string
     cidr_block  = string
   }))
-  default = []
+  default = [
+    {
+      rule_number = 900
+      rule_action = "allow"
+      from_port   = 22
+      to_port     = 22
+      protocol    = "tcp"
+      cidr_block  = "0.0.0.0/0"
+    },
+    {
+      rule_number = 901
+      rule_action = "allow"
+      from_port   = 32768
+      to_port     = 65535
+      protocol    = "tcp"
+      cidr_block  = "0.0.0.0/0"
+    },
+  ]
 }
 
 variable "network_acls_intra_inbound" {
