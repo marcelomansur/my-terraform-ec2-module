@@ -34,3 +34,6 @@ tfplan
 
 # Environment files
 .env
+
+# SSh files
+ssh
