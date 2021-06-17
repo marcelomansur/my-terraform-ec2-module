@@ -1,18 +1,15 @@
+# AWS region
 variable "aws_region" {
   description = "The AWS region"
   type        = string
   default     = "us-east-1"
 }
 
-variable "my_personal_ip" {
-  description = "User personal computer IP"
+# VPC
+variable "vpc_name" {
+  description = "The VPC name"
   type        = string
-}
-
-variable "my_key_file" {
-  description = "The public ssh RSA key file used for connection"
-  type        = string
-  default     = "ssh/aws_rsa.pub"
+  default     = "my_vpc"
 }
 
 variable "vpc_cidr" {
@@ -20,6 +17,13 @@ variable "vpc_cidr" {
   type        = string
 }
 
+variable "vpc_tags" {
+  description = "Tags to identify VPC"
+  type        = map(string)
+  default     = {}
+}
+
+# Subnets
 variable "intra_subnets" {
   description = "A list of intra subnets"
   type        = list(string)
@@ -35,141 +39,51 @@ variable "private_subnets" {
   type        = list(string)
 }
 
-variable "network_acls_default_inbound" {
+# Network ACLs
+variable "default_inbound_acl_rules" {
   description = "The network ACLs default inbound rules"
-  type = list(object({
-    rule_number = number
-    rule_action = string
-    from_port   = number
-    to_port     = number
-    protocol    = string
-    cidr_block  = string
-  }))
-  default = [
-    {
-      rule_number = 900
-      rule_action = "allow"
-      from_port   = 22
-      to_port     = 22
-      protocol    = "tcp"
-      cidr_block  = "0.0.0.0/0"
-    },
-    {
-      rule_number = 901
-      rule_action = "allow"
-      from_port   = 1024
-      to_port     = 65535
-      protocol    = "tcp"
-      cidr_block  = "0.0.0.0/0"
-    },
-  ]
+  type        = map(map(any))
+  default     = {}
 }
 
-variable "network_acls_default_outbound" {
+variable "default_outbound_acl_rules" {
   description = "The network ACLs default outbound rules"
-  type = list(object({
-    rule_number = number
-    rule_action = string
-    from_port   = number
-    to_port     = number
-    protocol    = string
-    cidr_block  = string
-  }))
-  default = [
-    {
-      rule_number = 900
-      rule_action = "allow"
-      from_port   = 22
-      to_port     = 22
-      protocol    = "tcp"
-      cidr_block  = "0.0.0.0/0"
-    },
-    {
-      rule_number = 901
-      rule_action = "allow"
-      from_port   = 32768
-      to_port     = 65535
-      protocol    = "tcp"
-      cidr_block  = "0.0.0.0/0"
-    },
-  ]
+  type        = map(map(any))
+  default     = {}
 }
 
-variable "network_acls_intra_inbound" {
-  description = "The network ACLs intra inbound rules"
-  type = list(object({
-    rule_number = number
-    rule_action = string
-    from_port   = number
-    to_port     = number
-    protocol    = string
-    cidr_block  = string
-  }))
-  default = []
-}
-
-variable "network_acls_intra_outbound" {
-  description = "The network ACLs intra outbound rules"
-  type = list(object({
-    rule_number = number
-    rule_action = string
-    from_port   = number
-    to_port     = number
-    protocol    = string
-    cidr_block  = string
-  }))
-  default = []
-}
-
-variable "network_acls_public_inbound" {
+variable "public_inbound_acl_rules" {
   description = "The network ACLs public inbound rules"
-  type = list(object({
-    rule_number = number
-    rule_action = string
-    from_port   = number
-    to_port     = number
-    protocol    = string
-    cidr_block  = string
-  }))
-  default = []
+  type        = map(map(any))
+  default     = {}
 }
 
-variable "network_acls_public_outbound" {
+variable "public_outbound_acl_rules" {
   description = "The network ACLs public outbound rules"
-  type = list(object({
-    rule_number = number
-    rule_action = string
-    from_port   = number
-    to_port     = number
-    protocol    = string
-    cidr_block  = string
-  }))
-  default = []
+  type        = map(map(any))
+  default     = {}
 }
 
-
-variable "network_acls_private_inbound" {
+variable "private_inbound_acl_rules" {
   description = "The network ACLs private inbound rules"
-  type = list(object({
-    rule_number = number
-    rule_action = string
-    from_port   = number
-    to_port     = number
-    protocol    = string
-    cidr_block  = string
-  }))
-  default = []
+  type        = map(map(any))
+  default     = {}
 }
 
-variable "network_acls_private_outbound" {
+variable "private_outbound_acl_rules" {
   description = "The network ACLs private outbound rules"
-  type = list(object({
-    rule_number = number
-    rule_action = string
-    from_port   = number
-    to_port     = number
-    protocol    = string
-    cidr_block  = string
-  }))
-  default = []
+  type        = map(map(any))
+  default     = {}
+}
+
+variable "intra_inbound_acl_rules" {
+  description = "The network ACLs intra inbound rules"
+  type        = map(map(any))
+  default     = {}
+}
+
+variable "intra_outbound_acl_rules" {
+  description = "The network ACLs intra outbound rules"
+  type        = map(map(any))
+  default     = {}
 }
