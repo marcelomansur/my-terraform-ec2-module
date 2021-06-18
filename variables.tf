@@ -43,13 +43,31 @@ variable "private_subnets" {
 variable "default_inbound_acl_rules" {
   description = "The network ACLs default inbound rules"
   type        = map(map(any))
-  default     = {}
+  default = {
+    "ssh" = {
+      "rule_number" = 100
+      "rule_action" = "allow"
+      "from_port"   = 22
+      "to_port"     = 22
+      "protocol"    = "tcp"
+      "cidr_block"  = "0.0.0.0/0"
+    },
+  }
 }
 
 variable "default_outbound_acl_rules" {
   description = "The network ACLs default outbound rules"
   type        = map(map(any))
-  default     = {}
+  default = {
+    "ssh" = {
+      "rule_number" = 100
+      "rule_action" = "allow"
+      "from_port"   = 22
+      "to_port"     = 22
+      "protocol"    = "tcp"
+      "cidr_block"  = "0.0.0.0/0"
+    },
+  }
 }
 
 variable "public_inbound_acl_rules" {

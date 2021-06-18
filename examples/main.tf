@@ -29,4 +29,42 @@ module "my_ec2" {
       "cidr_block"  = "0.0.0.0/0"
     },
   }
+  public_outbound_acl_rules = {
+    "http" = {
+      "rule_number" = 110
+      "rule_action" = "allow"
+      "from_port"   = 80
+      "to_port"     = 80
+      "protocol"    = "tcp"
+      "cidr_block"  = "0.0.0.0/0"
+    },
+    "https" = {
+      "rule_number" = 120
+      "rule_action" = "allow"
+      "from_port"   = 443
+      "to_port"     = 443
+      "protocol"    = "tcp"
+      "cidr_block"  = "0.0.0.0/0"
+    },
+  }
+  intra_inbound_acl_rules = {
+    "mongodb" = {
+      "rule_number" = 110
+      "rule_action" = "allow"
+      "from_port"   = 27017
+      "to_port"     = 27017
+      "protocol"    = "tcp"
+      "cidr_block"  = "0.0.0.0/0"
+    },
+  }
+  intra_outbound_acl_rules = {
+    "mongodb" = {
+      "rule_number" = 110
+      "rule_action" = "allow"
+      "from_port"   = 27017
+      "to_port"     = 27017
+      "protocol"    = "tcp"
+      "cidr_block"  = "0.0.0.0/0"
+    },
+  }
 }
