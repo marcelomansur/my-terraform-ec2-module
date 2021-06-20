@@ -1,3 +1,4 @@
+# Internet route table
 resource "aws_route_table" "intenet_route_table" {
   vpc_id = aws_vpc.my_vpc.id
 
@@ -18,7 +19,7 @@ resource "aws_route_table_association" "intenet_association" {
   route_table_id = aws_route_table.intenet_route_table.id
 }
 
-
+# NAT route table
 resource "aws_route_table" "nat_route_table" {
   vpc_id = aws_vpc.my_vpc.id
 
@@ -39,6 +40,7 @@ resource "aws_route_table_association" "nat_association" {
   route_table_id = aws_route_table.nat_route_table.id
 }
 
+# Intra route table
 resource "aws_route_table" "intra_route_table" {
   vpc_id = aws_vpc.my_vpc.id
 

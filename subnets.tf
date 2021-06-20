@@ -1,3 +1,4 @@
+# Public subnet
 resource "aws_subnet" "my_public_subnet" {
   for_each = toset(var.public_subnets)
 
@@ -9,6 +10,7 @@ resource "aws_subnet" "my_public_subnet" {
   }
 }
 
+# Private subnet
 resource "aws_subnet" "my_private_subnet" {
   for_each = toset(var.private_subnets)
 
@@ -20,6 +22,7 @@ resource "aws_subnet" "my_private_subnet" {
   }
 }
 
+# Intra subnet
 resource "aws_subnet" "my_intra_subnet" {
   for_each = toset(var.intra_subnets)
 

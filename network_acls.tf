@@ -25,6 +25,7 @@ locals {
   )
 }
 
+# Public network ACL
 resource "aws_network_acl" "my_public_acl" {
   vpc_id     = aws_vpc.my_vpc.id
   subnet_ids = [for k, v in aws_subnet.my_public_subnet : v.id]
@@ -60,6 +61,7 @@ resource "aws_network_acl_rule" "my_public_outbound" {
   cidr_block     = lookup(each.value, "cidr_block", null)
 }
 
+# Private network ACL
 resource "aws_network_acl" "my_private_acl" {
   vpc_id     = aws_vpc.my_vpc.id
   subnet_ids = [for k, v in aws_subnet.my_private_subnet : v.id]
@@ -95,6 +97,7 @@ resource "aws_network_acl_rule" "my_private_outbound" {
   cidr_block     = lookup(each.value, "cidr_block", null)
 }
 
+# Intra network ACL
 resource "aws_network_acl" "my_intra_acl" {
   vpc_id     = aws_vpc.my_vpc.id
   subnet_ids = [for k, v in aws_subnet.my_intra_subnet : v.id]
