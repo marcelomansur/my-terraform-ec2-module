@@ -1,3 +1,7 @@
+locals {
+  my_public_subnet_array = keys(aws_subnet.my_public_subnet)
+}
+
 resource "aws_internet_gateway" "my_internet_gw" {
   vpc_id = aws_vpc.my_vpc.id
 
@@ -7,13 +11,11 @@ resource "aws_internet_gateway" "my_internet_gw" {
 }
 
 resource "aws_nat_gateway" "my_nat_gw" {
-  for_each = aws_subnet.my_private_subnet
-
-  allocation_id = aws_eip.my_eip[each.key].id
-  subnet_id     = each.value.id
+  allocation_id = aws_eip.my_eip.id
+  subnet_id     = aws_subnet.my_public_subnet[local.my_public_subnet_array[0]].id
 
   tags = {
-    Name = "my_nat_gateway_${each.value.id}"
+    Name = "my_nat_gateway"
   }
 
   # To ensure proper ordering, it is recommended to add an explicit dependency
@@ -22,10 +24,9 @@ resource "aws_nat_gateway" "my_nat_gw" {
 }
 
 resource "aws_eip" "my_eip" {
-  for_each = aws_subnet.my_private_subnet
-  vpc      = true
+  vpc = true
 
   tags = {
-    "Name" = "my_elastic_ip_${each.value.id}"
+    "Name" = "my_elastic_nat_ip"
   }
 }
