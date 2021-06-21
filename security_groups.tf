@@ -79,20 +79,20 @@ resource "aws_security_group_rule" "my_private_sg_ingress_with_source_public_sg"
   from_port                = each.value["from_port"]
   to_port                  = each.value["to_port"]
   protocol                 = each.value["protocol"]
-  security_group_id        = aws_security_group.my_private_sg.id
   source_security_group_id = aws_security_group.my_public_sg.id
+  security_group_id        = aws_security_group.my_private_sg.id
 }
 
 # Outbound rules
 resource "aws_security_group_rule" "my_private_sg_egress_with_source_public_sg" {
   for_each = local.merged_private_sg_egress_with_source_public_sg
 
-  type                     = "egress"
-  from_port                = each.value["from_port"]
-  to_port                  = each.value["to_port"]
-  protocol                 = each.value["protocol"]
-  security_group_id        = aws_security_group.my_private_sg.id
-  source_security_group_id = aws_security_group.my_public_sg.id
+  type              = "egress"
+  from_port         = each.value["from_port"]
+  to_port           = each.value["to_port"]
+  protocol          = each.value["protocol"]
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.my_private_sg.id
 }
 
 # Intra security group
@@ -114,18 +114,18 @@ resource "aws_security_group_rule" "my_intra_sg_ingress_with_source_public_sg" {
   from_port                = each.value["from_port"]
   to_port                  = each.value["to_port"]
   protocol                 = each.value["protocol"]
-  security_group_id        = aws_security_group.my_intra_sg.id
   source_security_group_id = aws_security_group.my_public_sg.id
+  security_group_id        = aws_security_group.my_intra_sg.id
 }
 
 # Outbound rules
 resource "aws_security_group_rule" "my_intra_sg_egress_with_source_public_sg" {
   for_each = local.merged_intra_sg_egress_with_source_public_sg
 
-  type                     = "egress"
-  from_port                = each.value["from_port"]
-  to_port                  = each.value["to_port"]
-  protocol                 = each.value["protocol"]
-  security_group_id        = aws_security_group.my_intra_sg.id
-  source_security_group_id = aws_security_group.my_public_sg.id
+  type              = "egress"
+  from_port         = each.value["from_port"]
+  to_port           = each.value["to_port"]
+  protocol          = each.value["protocol"]
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.my_intra_sg.id
 }
