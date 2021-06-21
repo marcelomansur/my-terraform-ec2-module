@@ -1,27 +1,27 @@
 locals {
-  merged_public_sg_ingress_from_all = merge(
-    var.default_sg_ingress_from_all,
-    var.public_sg_ingress_from_all
+  merged_public_inbound_sg_rules = merge(
+    var.default_inbound_sg_rules,
+    var.public_inbound_sg_rules
   )
-  merged_public_sg_egress_from_all = merge(
-    var.default_sg_egress_from_all,
-    var.public_sg_egress_from_all
+  merged_public_outbound_sg_rules = merge(
+    var.default_outbound_sg_rules,
+    var.public_outbound_sg_rules
   )
-  merged_private_sg_ingress_with_source_public_sg = merge(
-    var.default_sg_ingress_from_all,
-    var.private_sg_ingress_with_source_public_sg
+  merged_private_inbound_sg_rules = merge(
+    var.default_inbound_sg_rules,
+    var.private_inbound_sg_rules
   )
-  merged_private_sg_egress_with_source_public_sg = merge(
-    var.default_sg_egress_from_all,
-    var.private_sg_egress_with_source_public_sg
+  merged_private_outbound_sg_rules = merge(
+    var.default_outbound_sg_rules,
+    var.private_outbound_sg_rules
   )
-  merged_intra_sg_ingress_with_source_public_sg = merge(
-    var.default_sg_ingress_from_all,
-    var.intra_sg_ingress_with_source_public_sg
+  merged_intra_inbound_sg_rules = merge(
+    var.default_inbound_sg_rules,
+    var.intra_inbound_sg_rules
   )
-  merged_intra_sg_egress_with_source_public_sg = merge(
-    var.default_sg_egress_from_all,
-    var.intra_sg_egress_with_source_public_sg
+  merged_intra_outbound_sg_rules = merge(
+    var.default_outbound_sg_rules,
+    var.intra_outbound_sg_rules
   )
 }
 
@@ -37,8 +37,8 @@ resource "aws_security_group" "my_public_sg" {
 }
 
 # Inbound rules
-resource "aws_security_group_rule" "my_public_sg_ingress_from_all" {
-  for_each = local.merged_public_sg_ingress_from_all
+resource "aws_security_group_rule" "my_public_inbound_sg_rules" {
+  for_each = local.merged_public_inbound_sg_rules
 
   type              = "ingress"
   from_port         = each.value["from_port"]
@@ -49,8 +49,8 @@ resource "aws_security_group_rule" "my_public_sg_ingress_from_all" {
 }
 
 # Outbound rules
-resource "aws_security_group_rule" "my_public_sg_egress_from_all" {
-  for_each = local.merged_public_sg_egress_from_all
+resource "aws_security_group_rule" "my_public_outbound_sg_rules" {
+  for_each = local.merged_public_outbound_sg_rules
 
   type              = "egress"
   from_port         = each.value["from_port"]
@@ -72,8 +72,8 @@ resource "aws_security_group" "my_private_sg" {
 }
 
 # Inbound rules
-resource "aws_security_group_rule" "my_private_sg_ingress_with_source_public_sg" {
-  for_each = local.merged_private_sg_ingress_with_source_public_sg
+resource "aws_security_group_rule" "my_private_inbound_sg_rules" {
+  for_each = local.merged_private_inbound_sg_rules
 
   type                     = "ingress"
   from_port                = each.value["from_port"]
@@ -84,8 +84,8 @@ resource "aws_security_group_rule" "my_private_sg_ingress_with_source_public_sg"
 }
 
 # Outbound rules
-resource "aws_security_group_rule" "my_private_sg_egress_with_source_public_sg" {
-  for_each = local.merged_private_sg_egress_with_source_public_sg
+resource "aws_security_group_rule" "my_private_outbound_sg_rules" {
+  for_each = local.merged_private_outbound_sg_rules
 
   type              = "egress"
   from_port         = each.value["from_port"]
@@ -107,8 +107,8 @@ resource "aws_security_group" "my_intra_sg" {
 }
 
 # Inbound rules
-resource "aws_security_group_rule" "my_intra_sg_ingress_with_source_public_sg" {
-  for_each = local.merged_intra_sg_ingress_with_source_public_sg
+resource "aws_security_group_rule" "my_intra_inbound_sg_rules" {
+  for_each = local.merged_intra_inbound_sg_rules
 
   type                     = "ingress"
   from_port                = each.value["from_port"]
@@ -119,8 +119,8 @@ resource "aws_security_group_rule" "my_intra_sg_ingress_with_source_public_sg" {
 }
 
 # Outbound rules
-resource "aws_security_group_rule" "my_intra_sg_egress_with_source_public_sg" {
-  for_each = local.merged_intra_sg_egress_with_source_public_sg
+resource "aws_security_group_rule" "my_intra_outbound_sg_rules" {
+  for_each = local.merged_intra_outbound_sg_rules
 
   type              = "egress"
   from_port         = each.value["from_port"]

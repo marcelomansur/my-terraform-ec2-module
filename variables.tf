@@ -181,7 +181,7 @@ variable "intra_outbound_acl_rules" {
 }
 
 # Security groups
-variable "default_sg_ingress_from_all" {
+variable "default_inbound_sg_rules" {
   description = "The network ACLs default inbound rules"
   type        = map(map(any))
   default = {
@@ -193,7 +193,7 @@ variable "default_sg_ingress_from_all" {
   }
 }
 
-variable "default_sg_egress_from_all" {
+variable "default_outbound_sg_rules" {
   description = "The network ACLs default outbound rules"
   type        = map(map(any))
   default = {
@@ -205,7 +205,7 @@ variable "default_sg_egress_from_all" {
   }
 }
 
-variable "public_sg_ingress_from_all" {
+variable "public_inbound_sg_rules" {
   description = "The network ACLs public inbound rules"
   type        = map(map(any))
   default = {
@@ -222,31 +222,31 @@ variable "public_sg_ingress_from_all" {
   }
 }
 
-variable "public_sg_egress_from_all" {
+variable "public_outbound_sg_rules" {
   description = "The network ACLs public outbound rules"
   type        = map(map(any))
   default     = {}
 }
 
-variable "private_sg_ingress_with_source_public_sg" {
+variable "private_inbound_sg_rules" {
   description = "The network ACLs private inbound rules"
   type        = map(map(any))
   default     = {}
 }
 
-variable "private_sg_egress_with_source_public_sg" {
+variable "private_outbound_sg_rules" {
   description = "The network ACLs private outbound rules"
   type        = map(map(any))
   default     = {}
 }
 
-variable "intra_sg_ingress_with_source_public_sg" {
+variable "intra_inbound_sg_rules" {
   description = "The network ACLs intra inbound rules"
   type        = map(map(any))
   default     = {}
 }
 
-variable "intra_sg_egress_with_source_public_sg" {
+variable "intra_outbound_sg_rules" {
   description = "The network ACLs intra outbound rules"
   type        = map(map(any))
   default     = {}

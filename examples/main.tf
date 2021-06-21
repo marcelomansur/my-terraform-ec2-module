@@ -32,7 +32,7 @@ module "my_ec2" {
     },
   }
   # Security groups
-  intra_sg_ingress_with_source_public_sg = {
+  intra_inbound_sg_rules = {
     "ssh-tcp" = {
       "from_port" = 22
       "to_port"   = 22
@@ -44,7 +44,7 @@ module "my_ec2" {
       "protocol"  = "tcp"
     },
   }
-  intra_sg_egress_with_source_public_sg = {
+  intra_outbound_sg_rules = {
     "ssh-tcp" = {
       "from_port" = 22
       "to_port"   = 22
