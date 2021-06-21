@@ -85,7 +85,7 @@ variable "default_outbound_acl_rules" {
     "ephemeral" = {
       "rule_number" = 901
       "rule_action" = "allow"
-      "from_port"   = 32768
+      "from_port"   = 1024
       "to_port"     = 65535
       "protocol"    = "tcp"
       "cidr_block"  = "0.0.0.0/0"
@@ -148,7 +148,24 @@ variable "private_inbound_acl_rules" {
 variable "private_outbound_acl_rules" {
   description = "The network ACLs private outbound rules"
   type        = map(map(any))
-  default     = {}
+  default = {
+    "http" = {
+      "rule_number" = 110
+      "rule_action" = "allow"
+      "from_port"   = 80
+      "to_port"     = 80
+      "protocol"    = "tcp"
+      "cidr_block"  = "0.0.0.0/0"
+    },
+    "https" = {
+      "rule_number" = 120
+      "rule_action" = "allow"
+      "from_port"   = 443
+      "to_port"     = 443
+      "protocol"    = "tcp"
+      "cidr_block"  = "0.0.0.0/0"
+    },
+  }
 }
 
 variable "intra_inbound_acl_rules" {
