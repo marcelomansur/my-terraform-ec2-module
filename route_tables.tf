@@ -36,27 +36,27 @@ resource "aws_route_table" "nat_route_table" {
 }
 
 resource "aws_route_table_association" "nat_association" {
-  for_each = aws_subnet.my_private_subnet
+  for_each = aws_subnet.my_private_with_nat_subnet
 
   subnet_id      = each.value.id
   route_table_id = aws_route_table.nat_route_table.id
 }
 
-# Intra route table
-resource "aws_route_table" "intra_route_table" {
+# private route table
+resource "aws_route_table" "private_route_table" {
   vpc_id = aws_vpc.my_vpc.id
 
   route = []
 
   tags = {
-    Name   = "intra_route_table"
+    Name   = "private_route_table"
     Deploy = "Terraform"
   }
 }
 
-resource "aws_route_table_association" "intra_association" {
-  for_each = aws_subnet.my_intra_subnet
+resource "aws_route_table_association" "private_association" {
+  for_each = aws_subnet.my_private_subnet
 
   subnet_id      = each.value.id
-  route_table_id = aws_route_table.intra_route_table.id
+  route_table_id = aws_route_table.private_route_table.id
 }

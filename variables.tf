@@ -25,8 +25,8 @@ variable "vpc_cidr" {
 }
 
 # Subnets
-variable "intra_subnets" {
-  description = "A list of intra subnets"
+variable "private_subnets" {
+  description = "A list of private subnets"
   type        = list(string)
 }
 
@@ -35,8 +35,8 @@ variable "public_subnets" {
   type        = list(string)
 }
 
-variable "private_subnets" {
-  description = "A list of private subnets"
+variable "private_with_nat_subnets" {
+  description = "A list of private_with_nat subnets"
   type        = list(string)
 }
 
@@ -170,14 +170,14 @@ variable "public_outbound_acl_rules" {
   }
 }
 
-variable "private_inbound_acl_rules" {
-  description = "The network ACLs private inbound rules"
+variable "private_with_nat_inbound_acl_rules" {
+  description = "The network ACLs private_with_nat inbound rules"
   type        = map(map(any))
   default     = {}
 }
 
-variable "private_outbound_acl_rules" {
-  description = "The network ACLs private outbound rules"
+variable "private_with_nat_outbound_acl_rules" {
+  description = "The network ACLs private_with_nat outbound rules"
   type        = map(map(any))
   default = {
     http = {
@@ -199,14 +199,14 @@ variable "private_outbound_acl_rules" {
   }
 }
 
-variable "intra_inbound_acl_rules" {
-  description = "The network ACLs intra inbound rules"
+variable "private_inbound_acl_rules" {
+  description = "The network ACLs private inbound rules"
   type        = map(map(any))
   default     = {}
 }
 
-variable "intra_outbound_acl_rules" {
-  description = "The network ACLs intra outbound rules"
+variable "private_outbound_acl_rules" {
+  description = "The network ACLs private outbound rules"
   type        = map(map(any))
   default     = {}
 }
@@ -259,6 +259,18 @@ variable "public_outbound_sg_rules" {
   default     = {}
 }
 
+variable "private_with_nat_inbound_sg_rules" {
+  description = "The network ACLs private_with_nat inbound rules"
+  type        = map(map(any))
+  default     = {}
+}
+
+variable "private_with_nat_outbound_sg_rules" {
+  description = "The network ACLs private_with_nat outbound rules"
+  type        = map(map(any))
+  default     = {}
+}
+
 variable "private_inbound_sg_rules" {
   description = "The network ACLs private inbound rules"
   type        = map(map(any))
@@ -267,18 +279,6 @@ variable "private_inbound_sg_rules" {
 
 variable "private_outbound_sg_rules" {
   description = "The network ACLs private outbound rules"
-  type        = map(map(any))
-  default     = {}
-}
-
-variable "intra_inbound_sg_rules" {
-  description = "The network ACLs intra inbound rules"
-  type        = map(map(any))
-  default     = {}
-}
-
-variable "intra_outbound_sg_rules" {
-  description = "The network ACLs intra outbound rules"
   type        = map(map(any))
   default     = {}
 }

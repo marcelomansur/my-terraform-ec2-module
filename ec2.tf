@@ -43,11 +43,11 @@ resource "aws_instance" "my_ec2_monitoring_cluster" {
   key_name      = aws_key_pair.my_key_pair.key_name
   instance_type = lookup(each.value, "instance_type", "t2.micro")
 
-  vpc_security_group_ids = [aws_security_group.my_private_sg.id]
+  vpc_security_group_ids = [aws_security_group.my_private_with_nat_sg.id]
 
-  subnet_id = lookup(aws_subnet.my_private_subnet,
-    var.private_subnets[0],
-    var.private_subnets[0]
+  subnet_id = lookup(aws_subnet.my_private_with_nat_subnet,
+    var.private_with_nat_subnets[0],
+    var.private_with_nat_subnets[0]
   ).id
 
   monitoring = lookup(each.value, "monitoring", true)
@@ -68,11 +68,11 @@ resource "aws_instance" "my_ec2_database_cluster" {
   key_name      = aws_key_pair.my_key_pair.key_name
   instance_type = lookup(each.value, "instance_type", "t2.micro")
 
-  vpc_security_group_ids = [aws_security_group.my_intra_sg.id]
+  vpc_security_group_ids = [aws_security_group.my_private_sg.id]
 
-  subnet_id = lookup(aws_subnet.my_intra_subnet,
-    var.intra_subnets[0],
-    var.intra_subnets[0]
+  subnet_id = lookup(aws_subnet.my_private_subnet,
+    var.private_subnets[0],
+    var.private_subnets[0]
   ).id
 
   monitoring = lookup(each.value, "monitoring", true)
