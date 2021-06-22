@@ -2,6 +2,20 @@
 
 Terraform module which creates a complete EC2 environment on AWS.
 
+This module is the result of my personal studies using Terraform in AWS. These are the mainly concepts used:
+
+- VPC Network
+- Subnets:
+  - public = webserver
+  - private = monitoring
+  - intra = database
+- Network ACLs
+- Security groups
+- Route tables
+- Internet gateway
+- NAT gateway
+- EC2 instances
+
 ## Usage
 
 ```hcl
@@ -22,7 +36,7 @@ module "ec2_cluster" {
 
 ## Examples
 
-- [Basic EC2 environment](examples/)
+- This [basic example](examples) shows how to use this module to create a basic environment with 3 instances and 3 subnets.
 
 ## Requirements
 
