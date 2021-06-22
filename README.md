@@ -28,9 +28,9 @@ module "ec2_cluster" {
   vpc_name = "my_vpc"
   vpc_cidr = "10.0.0.0/16"
   # VPC Subnets
-  private_subnets   = ["10.0.1.0/24"]
-  public_subnets  = ["10.0.101.0/24"]
+  public_subnets           = ["10.0.101.0/24"]
   private_with_nat_subnets = ["10.0.201.0/24"]
+  private_subnets          = ["10.0.1.0/24"]
   # EC2 instances
   webserver_instances = {
     webserver-example = {
@@ -56,6 +56,35 @@ module "ec2_cluster" {
 ## Examples
 
 - This [basic example](examples) shows how to use this module to create a basic environment with 3 instances and 3 subnets.
+
+## Subnet types variables
+
+A virtual private cloud (VPC) is a virtual network dedicated to your AWS account. It is logically isolated from other virtual networks in the AWS Cloud. After creating a VPC, you can add one or more subnets. This module provides three subnet types to build an environment:
+
+- `public_subnets`: It has a public IP and internet access provided by a Internet Gateway. Users can connect to it using SSH key pairs informed on variable `my\_key\_file`. It has also `http` and `https` ports open by default.
+- `private_with_nat_subnets`: It has outbound internet access using a NAT Gateway. It has also SSH connection open from other VPC instances.
+- `private_subnets`: It has NOT outbound internet access using a NAT Gateway. It has also SSH connection open from other VPC instances.
+
+## Network ACLs variables
+
+A network access control list (ACL) is an optional layer of security for your VPC that acts as a firewall for controlling traffic in and out of one or more subnets. In this module, each subnet has a network ACL associated to it:
+
+- `default_inbound_acl_rules` and `default_outbound_acl_rules`: Inbound and outbound rules merged to all others subnet. Put the default rules here and don't repeat it on others variables.
+- `public_inbound_acl_rules` and `public_outbound_acl_rules`: Inbound and outbound rules for the public subnet. It opens ports like `http` and `https`.
+- `private_with_nat_inbound_acl_rules` and `private_with_nat_outbound_acl_rules`: Inbound and outbound rules for the private_with_nat subnet. It opens ports like `http` and `https` for outbound rules.
+- `private_inbound_acl_rules` and `private_outbound_acl_rules`: Inbound and outbound rules for the private subnet. It must contain the most restrictive rules.
+
+> For study purposes, this module configures SSH port open by default for all subnets.
+
+## Security groups variables
+
+A security group (SG) acts as a virtual firewall for your instance to control inbound and outbound traffic. This module provides these security group types:
+- `default_inbound_sg_rules` and `default_outbound_sg_rules`: Inbound and outbound rules merged to all others subnet. Put the default rules here and don't repeat it on others variables.
+- `public_inbound_sg_rules` and `public_outbound_sg_rules`: Inbound and outbound rules for the public instances. It opens ports like `http` and `https`.
+- `private_with_nat_inbound_sg_rules` and `private_with_nat_outbound_sg_rules`: Inbound and outbound rules for the private_with_nat instances.
+- `private_inbound_sg_rules` and `private_outbound_sg_rules`: Inbound and outbound rules for the private instance. It must contain the most restrictive rules.
+
+> For study purposes, this module configures SSH port open by default for all subnets.
 
 ## Requirements
 
