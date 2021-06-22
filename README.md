@@ -16,10 +16,6 @@ This module is the result of my personal studies using Terraform in AWS. These a
 - NAT gateway
 - EC2 instances
 
-## Examples
-
-- This [basic example](examples) shows how to use this module to create a basic environment with 3 instances and 3 subnets.
-
 ## Usage
 
 ```hcl
@@ -40,7 +36,7 @@ module "ec2_cluster" {
 
 ## Examples
 
-- [Basic EC2 environment](examples/)
+- This [basic example](examples) shows how to use this module to create a basic environment with 3 instances and 3 subnets.
 
 ## Requirements
 
