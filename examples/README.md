@@ -1,3 +1,3 @@
-# EC2 complete example
+# EC2 basic example
 
 ![Imagem](./images/AWS_VPC.jpg)
