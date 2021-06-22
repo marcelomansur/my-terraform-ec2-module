@@ -7,8 +7,8 @@ This module is the result of my personal studies using Terraform in AWS. These a
 - VPC Network
 - Subnets:
   - public = webserver
-  - private = monitoring
-  - intra = database
+  - private_with_nat = monitoring
+  - private = database
 - Network ACLs
 - Security groups
 - Route tables
@@ -28,9 +28,9 @@ module "ec2_cluster" {
   vpc_name = "my_vpc"
   vpc_cidr = "10.0.0.0/16"
   # VPC Subnets
-  intra_subnets   = ["10.0.1.0/24"]
+  private_subnets   = ["10.0.1.0/24"]
   public_subnets  = ["10.0.101.0/24"]
-  private_subnets = ["10.0.201.0/24"]
+  private_with_nat_subnets = ["10.0.201.0/24"]
   # EC2 instances
   webserver_instances = {
     webserver-example = {
@@ -99,24 +99,24 @@ module "ec2_cluster" {
 | vpc\_cidr | The CIDR block for the VPC | `string` | n/a | yes |
 | vpc\_tags | Tags to identify VPC | `map(string)` | `{}` | no |
 | public\_subnets | A list of public subnets | `list(string)` | n/a | yes |
+| private_with_nat\_subnets | A list of private subnets with a NAT gateway | `list(string)` | n/a | yes |
 | private\_subnets | A list of private subnets | `list(string)` | n/a | yes |
-| intra\_subnets | A list of intra subnets | `list(string)` | n/a | yes |
 | default\_inbound\_acl\_rules | The network ACLs default inbound rules | `map(map(any))` | <pre>{<br>  "ephemeral": {<br>    "cidr_block": "0.0.0.0/0",<br>    "from_port": 1024,<br>    "protocol": "tcp",<br>    "rule_action": "allow",<br>    "rule_number": 901,<br>    "to_port": 65535<br>  },<br>  "ssh": {<br>    "cidr_block": "0.0.0.0/0",<br>    "from_port": 22,<br>    "protocol": "tcp",<br>    "rule_action": "allow",<br>    "rule_number": 100,<br>    "to_port": 22<br>  }<br>}</pre> | no |
 | default\_outbound\_acl\_rules | The network ACLs default outbound rules | `map(map(any))` | <pre>{<br>  "ephemeral": {<br>    "cidr_block": "0.0.0.0/0",<br>    "from_port": 1024,<br>    "protocol": "tcp",<br>    "rule_action": "allow",<br>    "rule_number": 901,<br>    "to_port": 65535<br>  },<br>  "ssh": {<br>    "cidr_block": "0.0.0.0/0",<br>    "from_port": 22,<br>    "protocol": "tcp",<br>    "rule_action": "allow",<br>    "rule_number": 100,<br>    "to_port": 22<br>  }<br>}</pre> | no |
 | public\_inbound\_acl\_rules | The network ACLs public inbound rules | `map(map(any))` | <pre>{<br>  "http": {<br>    "cidr_block": "0.0.0.0/0",<br>    "from_port": 80,<br>    "protocol": "tcp",<br>    "rule_action": "allow",<br>    "rule_number": 110,<br>    "to_port": 80<br>  },<br>  "https": {<br>    "cidr_block": "0.0.0.0/0",<br>    "from_port": 443,<br>    "protocol": "tcp",<br>    "rule_action": "allow",<br>    "rule_number": 120,<br>    "to_port": 443<br>  }<br>}</pre> | no |
 | public\_outbound\_acl\_rules | The network ACLs public outbound rules | `map(map(any))` | <pre>{<br>  "http": {<br>    "cidr_block": "0.0.0.0/0",<br>    "from_port": 80,<br>    "protocol": "tcp",<br>    "rule_action": "allow",<br>    "rule_number": 110,<br>    "to_port": 80<br>  },<br>  "https": {<br>    "cidr_block": "0.0.0.0/0",<br>    "from_port": 443,<br>    "protocol": "tcp",<br>    "rule_action": "allow",<br>    "rule_number": 120,<br>    "to_port": 443<br>  }<br>}</pre> | no |
+| private_with_nat\_inbound\_acl\_rules | The network ACLs private_with_nat inbound rules | `map(map(any))` | `{}` | no |
+| private_with_nat\_outbound\_acl\_rules | The network ACLs private_with_nat outbound rules | `map(map(any))` | <pre>{<br>  "http": {<br>    "cidr_block": "0.0.0.0/0",<br>    "from_port": 80,<br>    "protocol": "tcp",<br>    "rule_action": "allow",<br>    "rule_number": 110,<br>    "to_port": 80<br>  },<br>  "https": {<br>    "cidr_block": "0.0.0.0/0",<br>    "from_port": 443,<br>    "protocol": "tcp",<br>    "rule_action": "allow",<br>    "rule_number": 120,<br>    "to_port": 443<br>  }<br>}</pre> | no |
 | private\_inbound\_acl\_rules | The network ACLs private inbound rules | `map(map(any))` | `{}` | no |
-| private\_outbound\_acl\_rules | The network ACLs private outbound rules | `map(map(any))` | <pre>{<br>  "http": {<br>    "cidr_block": "0.0.0.0/0",<br>    "from_port": 80,<br>    "protocol": "tcp",<br>    "rule_action": "allow",<br>    "rule_number": 110,<br>    "to_port": 80<br>  },<br>  "https": {<br>    "cidr_block": "0.0.0.0/0",<br>    "from_port": 443,<br>    "protocol": "tcp",<br>    "rule_action": "allow",<br>    "rule_number": 120,<br>    "to_port": 443<br>  }<br>}</pre> | no |
-| intra\_inbound\_acl\_rules | The network ACLs intra inbound rules | `map(map(any))` | `{}` | no |
-| intra\_outbound\_acl\_rules | The network ACLs intra outbound rules | `map(map(any))` | `{}` | no |
+| private\_outbound\_acl\_rules | The network ACLs private outbound rules | `map(map(any))` | `{}` | no |
 | default\_inbound\_sg\_rules | The network ACLs default inbound rules | `map(map(any))` | <pre>{<br>  "ssh-tcp": {<br>    "from_port": 22,<br>    "protocol": "tcp",<br>    "to_port": 22<br>  }<br>}</pre> | no |
 | default\_outbound\_sg\_rules | The network ACLs default outbound rules | `map(map(any))` | <pre>{<br>  "ssh-tcp": {<br>    "from_port": 0,<br>    "protocol": -1,<br>    "to_port": 0<br>  }<br>}</pre> | no |
 | public\_inbound\_sg\_rules | The network ACLs public inbound rules | `map(map(any))` | <pre>{<br>  "http-tcp": {<br>    "from_port": 80,<br>    "protocol": "tcp",<br>    "to_port": 80<br>  },<br>  "https-tcp": {<br>    "from_port": 443,<br>    "protocol": "tcp",<br>    "to_port": 443<br>  }<br>}</pre> | no |
 | public\_outbound\_sg\_rules | The network ACLs public outbound rules | `map(map(any))` | `{}` | no |
+| private_with_nat\_inbound\_sg\_rules | The network ACLs private_with_nat inbound rules | `map(map(any))` | `{}` | no |
+| private_with_nat\_outbound\_sg\_rules | The network ACLs private_with_nat outbound rules | `map(map(any))` | `{}` | no |
 | private\_inbound\_sg\_rules | The network ACLs private inbound rules | `map(map(any))` | `{}` | no |
 | private\_outbound\_sg\_rules | The network ACLs private outbound rules | `map(map(any))` | `{}` | no |
-| intra\_inbound\_sg\_rules | The network ACLs intra inbound rules | `map(map(any))` | `{}` | no |
-| intra\_outbound\_sg\_rules | The network ACLs intra outbound rules | `map(map(any))` | `{}` | no |
 | webserver\_instances | The EC2 instances for webserver cluster | `map(map(any))` | <pre>{<br>  "webserver-example": {<br>    "instance_name": "webserver-example",<br>    "instance_type": "t2.micro",<br>    "monitoring": true<br>  }<br>}</pre> | no |
 | monitoring\_instances | The EC2 instances for monitoring cluster | `map(map(any))` | <pre>{<br>  "monitoring-example": {<br>    "instance_name": "monitoring-example",<br>    "instance_type": "t2.micro",<br>    "monitoring": false<br>  }<br>}</pre> | no |
 | database\_instances | The EC2 instances for database cluster | `map(map(any))` | <pre>{<br>  "database-example": {<br>    "instance_name": "database-example",<br>    "instance_type": "t2.micro",<br>    "monitoring": true<br>  }<br>}</pre> | no |
