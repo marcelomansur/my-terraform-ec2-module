@@ -46,6 +46,25 @@ variable "private_subnets" {
   type        = list(string)
 }
 
+# EC2 instances
+variable "webserver_instances" {
+  description = "The EC2 instances for webserver cluster"
+  type        = map(map(any))
+  default     = {}
+}
+
+variable "monitoring_instances" {
+  description = "The EC2 instances for monitoring cluster"
+  type        = map(map(any))
+  default     = {}
+}
+
+variable "database_instances" {
+  description = "The EC2 instances for database cluster"
+  type        = map(map(any))
+  default     = {}
+}
+
 # Network ACLs
 variable "default_inbound_acl_rules" {
   description = "The network ACLs default inbound rules"
