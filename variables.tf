@@ -24,12 +24,6 @@ variable "vpc_cidr" {
   type        = string
 }
 
-variable "vpc_tags" {
-  description = "Tags to identify VPC"
-  type        = map(string)
-  default     = {}
-}
-
 # Subnets
 variable "intra_subnets" {
   description = "A list of intra subnets"
