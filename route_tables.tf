@@ -8,7 +8,8 @@ resource "aws_route_table" "intenet_route_table" {
   }
 
   tags = {
-    Name = "intenet_route_table"
+    Name   = "intenet_route_table"
+    Deploy = "Terraform"
   }
 }
 
@@ -29,7 +30,8 @@ resource "aws_route_table" "nat_route_table" {
   }
 
   tags = {
-    Name = "nat_route_table"
+    Name   = "nat_route_table"
+    Deploy = "Terraform"
   }
 }
 
@@ -47,7 +49,8 @@ resource "aws_route_table" "intra_route_table" {
   route = []
 
   tags = {
-    Name = "intra_route_table"
+    Name   = "intra_route_table"
+    Deploy = "Terraform"
   }
 }
 

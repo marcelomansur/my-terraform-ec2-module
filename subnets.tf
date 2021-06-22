@@ -6,7 +6,8 @@ resource "aws_subnet" "my_public_subnet" {
   cidr_block = each.key
 
   tags = {
-    Name = "my_public_subnet_${each.key}"
+    Name   = "my_public_subnet_${each.key}"
+    Deploy = "Terraform"
   }
 }
 
@@ -18,7 +19,8 @@ resource "aws_subnet" "my_private_subnet" {
   cidr_block = each.key
 
   tags = {
-    Name = "my_private_subnet_${each.key}"
+    Name   = "my_private_subnet_${each.key}"
+    Deploy = "Terraform"
   }
 }
 
@@ -30,6 +32,7 @@ resource "aws_subnet" "my_intra_subnet" {
   cidr_block = each.key
 
   tags = {
-    Name = "my_intra_subnet_${each.key}"
+    Name   = "my_intra_subnet_${each.key}"
+    Deploy = "Terraform"
   }
 }

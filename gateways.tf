@@ -7,7 +7,8 @@ resource "aws_internet_gateway" "my_internet_gw" {
   vpc_id = aws_vpc.my_vpc.id
 
   tags = {
-    Name = "my_internet_gateway"
+    Name   = "my_internet_gateway"
+    Deploy = "Terraform"
   }
 }
 
@@ -17,7 +18,8 @@ resource "aws_nat_gateway" "my_nat_gw" {
   subnet_id     = aws_subnet.my_public_subnet[local.my_public_subnet_array[0]].id
 
   tags = {
-    Name = "my_nat_gateway"
+    Name   = "my_nat_gateway"
+    Deploy = "Terraform"
   }
 
   # To ensure proper ordering, it is recommended to add an explicit dependency
@@ -31,5 +33,6 @@ resource "aws_eip" "my_eip" {
 
   tags = {
     "Name" = "my_elastic_nat_ip"
+    Deploy = "Terraform"
   }
 }

@@ -31,7 +31,8 @@ resource "aws_network_acl" "my_public_acl" {
   subnet_ids = [for k, v in aws_subnet.my_public_subnet : v.id]
 
   tags = {
-    Name = "my_public_acl"
+    Name   = "my_public_acl"
+    Deploy = "Terraform"
   }
 }
 
@@ -67,7 +68,8 @@ resource "aws_network_acl" "my_private_acl" {
   subnet_ids = [for k, v in aws_subnet.my_private_subnet : v.id]
 
   tags = {
-    Name = "my_private_acl"
+    Name   = "my_private_acl"
+    Deploy = "Terraform"
   }
 }
 
@@ -103,7 +105,8 @@ resource "aws_network_acl" "my_intra_acl" {
   subnet_ids = [for k, v in aws_subnet.my_intra_subnet : v.id]
 
   tags = {
-    Name = "my_intra_acl"
+    Name   = "my_intra_acl"
+    Deploy = "Terraform"
   }
 }
 

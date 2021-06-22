@@ -32,7 +32,8 @@ resource "aws_security_group" "my_public_sg" {
   vpc_id      = aws_vpc.my_vpc.id
 
   tags = {
-    Name = "my_public_sg"
+    Name   = "my_public_sg"
+    Deploy = "Terraform"
   }
 }
 
@@ -67,7 +68,8 @@ resource "aws_security_group" "my_private_sg" {
   vpc_id      = aws_vpc.my_vpc.id
 
   tags = {
-    Name = "my_private_sg"
+    Name   = "my_private_sg"
+    Deploy = "Terraform"
   }
 }
 
@@ -102,7 +104,8 @@ resource "aws_security_group" "my_intra_sg" {
   vpc_id      = aws_vpc.my_vpc.id
 
   tags = {
-    Name = "my_intra_sg"
+    Name   = "my_intra_sg"
+    Deploy = "Terraform"
   }
 }
 
