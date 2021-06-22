@@ -14,6 +14,6 @@ output "monitoring_private_ip" {
 }
 
 output "database_private_ip" {
-  description = "EC2 database instance database IP"
+  description = "EC2 database instance private IP"
   value       = { for k, v in aws_instance.my_ec2_database_cluster : k => v.private_ip }
 }
