@@ -50,19 +50,37 @@ variable "private_subnets" {
 variable "webserver_instances" {
   description = "The EC2 instances for webserver cluster"
   type        = map(map(any))
-  default     = {}
+  default = {
+    webserver-example = {
+      instance_name = "webserver-example"
+      instance_type = "t2.micro",
+      monitoring    = true
+    },
+  }
 }
 
 variable "monitoring_instances" {
   description = "The EC2 instances for monitoring cluster"
   type        = map(map(any))
-  default     = {}
+  default = {
+    monitoring-example = {
+      instance_name = "monitoring-example"
+      instance_type = "t2.micro",
+      monitoring    = false
+    },
+  }
 }
 
 variable "database_instances" {
   description = "The EC2 instances for database cluster"
   type        = map(map(any))
-  default     = {}
+  default = {
+    database-example = {
+      instance_name = "database-example"
+      instance_type = "t2.micro",
+      monitoring    = true
+    },
+  }
 }
 
 # Network ACLs
@@ -70,21 +88,21 @@ variable "default_inbound_acl_rules" {
   description = "The network ACLs default inbound rules"
   type        = map(map(any))
   default = {
-    "ssh" = {
-      "rule_number" = 100
-      "rule_action" = "allow"
-      "from_port"   = 22
-      "to_port"     = 22
-      "protocol"    = "tcp"
-      "cidr_block"  = "0.0.0.0/0"
+    ssh = {
+      rule_number = 100
+      rule_action = "allow"
+      from_port   = 22
+      to_port     = 22
+      protocol    = "tcp"
+      cidr_block  = "0.0.0.0/0"
     },
-    "ephemeral" = {
-      "rule_number" = 901
-      "rule_action" = "allow"
-      "from_port"   = 1024
-      "to_port"     = 65535
-      "protocol"    = "tcp"
-      "cidr_block"  = "0.0.0.0/0"
+    ephemeral = {
+      rule_number = 901
+      rule_action = "allow"
+      from_port   = 1024
+      to_port     = 65535
+      protocol    = "tcp"
+      cidr_block  = "0.0.0.0/0"
     },
   }
 }
@@ -93,21 +111,21 @@ variable "default_outbound_acl_rules" {
   description = "The network ACLs default outbound rules"
   type        = map(map(any))
   default = {
-    "ssh" = {
-      "rule_number" = 100
-      "rule_action" = "allow"
-      "from_port"   = 22
-      "to_port"     = 22
-      "protocol"    = "tcp"
-      "cidr_block"  = "0.0.0.0/0"
+    ssh = {
+      rule_number = 100
+      rule_action = "allow"
+      from_port   = 22
+      to_port     = 22
+      protocol    = "tcp"
+      cidr_block  = "0.0.0.0/0"
     },
-    "ephemeral" = {
-      "rule_number" = 901
-      "rule_action" = "allow"
-      "from_port"   = 1024
-      "to_port"     = 65535
-      "protocol"    = "tcp"
-      "cidr_block"  = "0.0.0.0/0"
+    ephemeral = {
+      rule_number = 901
+      rule_action = "allow"
+      from_port   = 1024
+      to_port     = 65535
+      protocol    = "tcp"
+      cidr_block  = "0.0.0.0/0"
     },
   }
 }
@@ -116,21 +134,21 @@ variable "public_inbound_acl_rules" {
   description = "The network ACLs public inbound rules"
   type        = map(map(any))
   default = {
-    "http" = {
-      "rule_number" = 110
-      "rule_action" = "allow"
-      "from_port"   = 80
-      "to_port"     = 80
-      "protocol"    = "tcp"
-      "cidr_block"  = "0.0.0.0/0"
+    http = {
+      rule_number = 110
+      rule_action = "allow"
+      from_port   = 80
+      to_port     = 80
+      protocol    = "tcp"
+      cidr_block  = "0.0.0.0/0"
     },
-    "https" = {
-      "rule_number" = 120
-      "rule_action" = "allow"
-      "from_port"   = 443
-      "to_port"     = 443
-      "protocol"    = "tcp"
-      "cidr_block"  = "0.0.0.0/0"
+    https = {
+      rule_number = 120
+      rule_action = "allow"
+      from_port   = 443
+      to_port     = 443
+      protocol    = "tcp"
+      cidr_block  = "0.0.0.0/0"
     },
   }
 }
@@ -139,21 +157,21 @@ variable "public_outbound_acl_rules" {
   description = "The network ACLs public outbound rules"
   type        = map(map(any))
   default = {
-    "http" = {
-      "rule_number" = 110
-      "rule_action" = "allow"
-      "from_port"   = 80
-      "to_port"     = 80
-      "protocol"    = "tcp"
-      "cidr_block"  = "0.0.0.0/0"
+    http = {
+      rule_number = 110
+      rule_action = "allow"
+      from_port   = 80
+      to_port     = 80
+      protocol    = "tcp"
+      cidr_block  = "0.0.0.0/0"
     },
-    "https" = {
-      "rule_number" = 120
-      "rule_action" = "allow"
-      "from_port"   = 443
-      "to_port"     = 443
-      "protocol"    = "tcp"
-      "cidr_block"  = "0.0.0.0/0"
+    https = {
+      rule_number = 120
+      rule_action = "allow"
+      from_port   = 443
+      to_port     = 443
+      protocol    = "tcp"
+      cidr_block  = "0.0.0.0/0"
     },
   }
 }
@@ -168,21 +186,21 @@ variable "private_outbound_acl_rules" {
   description = "The network ACLs private outbound rules"
   type        = map(map(any))
   default = {
-    "http" = {
-      "rule_number" = 110
-      "rule_action" = "allow"
-      "from_port"   = 80
-      "to_port"     = 80
-      "protocol"    = "tcp"
-      "cidr_block"  = "0.0.0.0/0"
+    http = {
+      rule_number = 110
+      rule_action = "allow"
+      from_port   = 80
+      to_port     = 80
+      protocol    = "tcp"
+      cidr_block  = "0.0.0.0/0"
     },
-    "https" = {
-      "rule_number" = 120
-      "rule_action" = "allow"
-      "from_port"   = 443
-      "to_port"     = 443
-      "protocol"    = "tcp"
-      "cidr_block"  = "0.0.0.0/0"
+    https = {
+      rule_number = 120
+      rule_action = "allow"
+      from_port   = 443
+      to_port     = 443
+      protocol    = "tcp"
+      cidr_block  = "0.0.0.0/0"
     },
   }
 }
@@ -204,10 +222,10 @@ variable "default_inbound_sg_rules" {
   description = "The network ACLs default inbound rules"
   type        = map(map(any))
   default = {
-    "ssh-tcp" = {
-      "from_port" = 22
-      "to_port"   = 22
-      "protocol"  = "tcp"
+    ssh-tcp = {
+      from_port = 22
+      to_port   = 22
+      protocol  = "tcp"
     },
   }
 }
@@ -216,10 +234,10 @@ variable "default_outbound_sg_rules" {
   description = "The network ACLs default outbound rules"
   type        = map(map(any))
   default = {
-    "ssh-tcp" = {
-      "from_port" = 0
-      "to_port"   = 0
-      "protocol"  = -1
+    ssh-tcp = {
+      from_port = 0
+      to_port   = 0
+      protocol  = -1
     },
   }
 }
@@ -228,15 +246,15 @@ variable "public_inbound_sg_rules" {
   description = "The network ACLs public inbound rules"
   type        = map(map(any))
   default = {
-    "http-tcp" = {
-      "from_port" = 80
-      "to_port"   = 80
-      "protocol"  = "tcp"
+    http-tcp = {
+      from_port = 80
+      to_port   = 80
+      protocol  = "tcp"
     },
-    "https-tcp" = {
-      "from_port" = 443
-      "to_port"   = 443
-      "protocol"  = "tcp"
+    https-tcp = {
+      from_port = 443
+      to_port   = 443
+      protocol  = "tcp"
     }
   }
 }
