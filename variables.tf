@@ -47,7 +47,7 @@ variable "webserver_instances" {
   default = {
     webserver-example = {
       instance_name = "webserver-example"
-      instance_type = "t2.micro",
+      instance_type = "t2.micro"
       monitoring    = true
     },
   }
@@ -59,7 +59,7 @@ variable "monitoring_instances" {
   default = {
     monitoring-example = {
       instance_name = "monitoring-example"
-      instance_type = "t2.micro",
+      instance_type = "t2.micro"
       monitoring    = false
     },
   }
@@ -71,7 +71,7 @@ variable "database_instances" {
   default = {
     database-example = {
       instance_name = "database-example"
-      instance_type = "t2.micro",
+      instance_type = "t2.micro"
       monitoring    = true
     },
   }
