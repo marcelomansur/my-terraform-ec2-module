@@ -31,6 +31,25 @@ module "ec2_cluster" {
   intra_subnets   = ["10.0.1.0/24"]
   public_subnets  = ["10.0.101.0/24"]
   private_subnets = ["10.0.201.0/24"]
+  # EC2 instances
+  webserver_instances = {
+    webserver-example = {
+      instance_name = "webserver-example"
+      instance_type = "t2.micro",
+    }
+  }
+  monitoring_instances = {
+    monitoring-example = {
+      instance_name = "monitoring-example"
+      instance_type = "t2.micro"
+    }
+  }
+  database_instances = {
+    database-example = {
+      instance_name = "database-example"
+      instance_type = "t2.micro"
+    }
+  }
 }
 ```
 
@@ -50,10 +69,6 @@ module "ec2_cluster" {
 | Name | Version |
 |------|---------|
 | aws | 3.44.0 |
-
-## Modules
-
-No Modules.
 
 ## Resources
 
