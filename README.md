@@ -61,9 +61,9 @@ module "ec2_cluster" {
 
 A virtual private cloud (VPC) is a virtual network dedicated to your AWS account. It is logically isolated from other virtual networks in the AWS Cloud. After creating a VPC, you can add one or more subnets. This module provides three subnet types to build an environment:
 
-- `public_subnets`: It has a public IP and internet access provided by a Internet Gateway. Users can connect to it using SSH key pairs informed on variable `my\_key\_file`. It has also `http` and `https` ports open by default.
-- `private_with_nat_subnets`: It has outbound internet access using a NAT Gateway. It has also SSH connection open from other VPC instances.
-- `private_subnets`: It has NOT outbound internet access using a NAT Gateway. It has also SSH connection open from other VPC instances.
+- `public_subnets`: List of subnets used for webservers. They have a public IP and internet access provided by a Internet Gateway. Users can connect to it using SSH key pairs informed on variable `my_key_file`.
+- `private_with_nat_subnets`: List of subnets used for monitoring or middlewares. It has outbound internet access using a NAT Gateway.
+- `private_subnets`: List of subnets used for databases. It has NOT internet access.
 
 ## Network ACLs variables
 
@@ -85,6 +85,13 @@ A security group (SG) acts as a virtual firewall for your instance to control in
 - `private_inbound_sg_rules` and `private_outbound_sg_rules`: Inbound and outbound rules for the private instance. It must contain the most restrictive rules.
 
 > For study purposes, this module configures SSH port open by default for all subnets.
+
+## EC2 instances variables
+
+A Elastic Compute Cloud (EC2) is a web service that provides secure, resizable compute capacity in the cloud. This module provides some EC2 instances:
+- `webserver_instances`: Map of objects, each one represents a instance of webserver.
+- `monitoring_instances`: Map of objects, each one represents a instance of monitoring server.
+- `database_instances`: Map of objects, each one represents a instance of database server.
 
 ## Requirements
 
