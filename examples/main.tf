@@ -1,8 +1,7 @@
 module "my_ec2" {
   source = "../"
 
-  aws_region = "us-east-1"
-  # VPC cidr blocks used
+  # VPC configuration
   vpc_name = "my_vpc"
   vpc_cidr = "10.0.0.0/16"
   # VPC Subnets
