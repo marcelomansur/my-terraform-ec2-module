@@ -1,10 +1,3 @@
-# AWS region
-variable "aws_region" {
-  description = "The AWS region"
-  type        = string
-  default     = "us-east-1"
-}
-
 # SSH public key file
 variable "my_key_file" {
   description = "The public ssh RSA key file used for connection"

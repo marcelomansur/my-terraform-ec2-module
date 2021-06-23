@@ -129,7 +129,6 @@ A Elastic Compute Cloud (EC2) is a web service that provides secure, resizable c
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| aws\_region | The AWS region | `string` | `"us-east-1"` | no |
 | my\_key\_file | The public ssh RSA key file used for connection | `string` | `"ssh/aws_rsa.pub"` | no |
 | vpc\_name | The VPC name | `string` | `"my_vpc"` | no |
 | vpc\_cidr | The CIDR block for the VPC | `string` | n/a | yes |
