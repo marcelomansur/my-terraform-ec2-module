@@ -129,6 +129,8 @@ A Elastic Compute Cloud (EC2) is a web service that provides secure, resizable c
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| ami\_name | A list of names for searching the AMI | `list(string)` | <pre>[<br>  "iac-ubuntu-v0.3*"<br>]</pre> | no |
+| ami\_owner | A list of owners for searching the AMI | `list(string)` | <pre>[<br>  "self"<br>]</pre> | no |
 | my\_key\_file | The public ssh RSA key file used for connection | `string` | `"ssh/aws_rsa.pub"` | no |
 | vpc\_name | The VPC name | `string` | `"my_vpc"` | no |
 | vpc\_cidr | The CIDR block for the VPC | `string` | n/a | yes |
