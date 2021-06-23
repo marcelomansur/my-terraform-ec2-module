@@ -33,6 +33,19 @@ variable "private_with_nat_subnets" {
   type        = list(string)
 }
 
+# AMI variables
+variable "ami_owner" {
+  description = "A list of owners for searching the AMI"
+  type        = list(string)
+  default     = ["self"]
+}
+
+variable "ami_name" {
+  description = "A list of names for searching the AMI"
+  type        = list(string)
+  default     = ["iac-ubuntu-v0.3*"]
+}
+
 # EC2 instances
 variable "webserver_instances" {
   description = "The EC2 instances for webserver cluster"

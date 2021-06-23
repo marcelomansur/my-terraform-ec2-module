@@ -1,11 +1,11 @@
 data "aws_ami" "packer_ami" {
   most_recent = true
 
-  owners = ["self"]
+  owners = var.ami_owner
 
   filter {
     name   = "name"
-    values = ["iac-ubuntu-v0.3*"]
+    values = var.ami_name
   }
 }
 
