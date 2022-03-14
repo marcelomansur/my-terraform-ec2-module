@@ -1,6 +1,11 @@
 module "my_ec2" {
   source = "../"
 
+  # AMI configuration
+  # Ubuntu
+  ami_name = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
+  # Canonical
+  ami_owner = ["099720109477"]
   # VPC configuration
   vpc_name = "my_vpc"
   vpc_cidr = "10.0.0.0/16"

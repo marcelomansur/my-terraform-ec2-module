@@ -37,13 +37,15 @@ variable "private_with_nat_subnets" {
 variable "ami_owner" {
   description = "A list of owners for searching the AMI"
   type        = list(string)
-  default     = ["self"]
+  # Canonical
+  default = ["099720109477"]
 }
 
 variable "ami_name" {
   description = "A list of names for searching the AMI"
   type        = list(string)
-  default     = ["iac-ubuntu-v0.3*"]
+  # Ubuntu
+  default = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
 }
 
 # EC2 instances
